@@ -2,6 +2,7 @@
     "name": "esol/sy_tools",
     "type": "symfony-bundle",
     "keywords": ["esol", "Symfony", "Tools"],
+    "minimum-stability": "stable",
     "homepage": "http://www.e-solutions.tm.fr/",
     "license": "MIT",
     "authors": [{
