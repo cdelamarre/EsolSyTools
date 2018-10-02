@@ -30,7 +30,7 @@ class Tools
     }
 
     /**
-     * Retourne le répertoire où se trouve composer.json 
+     * Retourne le répertoire où se trouve composer.json et qui n'appartient pas à un répertoire s'appelant vendor 
      * en remontant dans l'arborescence à partir du répertoire passé en paramètre
      * Cette fonction n'est appelée qu'à partir de getRootDir()
      * 
@@ -42,7 +42,7 @@ class Tools
     {
         $vToReturn = null;
         $a = scanDir($d);
-        if (in_array('composer.json', $a, true)) {
+        if (in_array('composer.json', $a, true) && !strpos($d, 'vendor')) {
             $vToReturn = $d;
         } else {
             $d = $this->getParentDir($d);
@@ -129,11 +129,11 @@ class Tools
         $dir_iterator = new \RecursiveDirectoryIterator($d);
         $iterator = new \RecursiveIteratorIterator($dir_iterator, \RecursiveIteratorIterator::CHILD_FIRST);
         foreach ($iterator as $f) {
-            if($f->isDir()){
+            if ($f->isDir()) {
                 try {
                     rmDir($f);
                 } catch (Exception $e) {
-                    echo 'Exception reçue : ',  $e->getMessage(), "\n";
+                    echo 'Exception reçue : ', $e->getMessage(), "\n";
                 }
 
             }
