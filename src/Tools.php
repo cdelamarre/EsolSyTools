@@ -41,7 +41,6 @@ class Tools
     private function getRootDir_1($d)
     {
         $vToReturn = null;
-        print PHP_EOL.'|||||||||||||||||||||||'.$d.'|||||||||||||||||||||||'.PHP_EOL;
         $a = scanDir($d);
         if (in_array('composer.json', $a, true) && !strpos($d, 'vendor')) {
             $vToReturn = $d;
