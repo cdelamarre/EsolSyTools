@@ -41,6 +41,7 @@ class Tools
     private function getRootDir_1($d)
     {
         $vToReturn = null;
+        print PHP_EOL.'|||||||||||||||||||||||'.$d.'|||||||||||||||||||||||'.PHP_EOL;
         $a = scanDir($d);
         if (in_array('composer.json', $a, true) && !strpos($d, 'vendor')) {
             $vToReturn = $d;
@@ -110,7 +111,7 @@ class Tools
         if (strpos($d, '\\') > -1) {
             $lastSlashPos = strrpos($d, '\\');
         } else {
-            $lastSlashPos = strrpos($d, '\/');
+            $lastSlashPos = strrpos($d, '/');
         }
         $d = substr($d, 0, $lastSlashPos);
         return $d;
