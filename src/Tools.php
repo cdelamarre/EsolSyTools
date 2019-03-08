@@ -6,10 +6,10 @@ class Tools
 {
 
     /**
-     * Retourne le rÃ©pertoire oÃ¹ se trouve composer.json 
-     * en remontant dans l'arborescence Ã  partir du rÃ©pertoire courant ( __DIR__ )
-     * quand aucun paramÃ¨tre n'a Ã©tÃ© passÃ©.
-     * Le paramÃ¨tre $d est donc optionnel
+     * Retourne le répertoire où se trouve composer.json 
+     * en remontant dans l'arborescence à partir du répertoire courant ( __DIR__ )
+     * quand aucun paramètre n'a été passé.
+     * Le paramètre $d est donc optionnel
      * 
      * @param string $d
      *
@@ -30,9 +30,9 @@ class Tools
     }
 
     /**
-     * Retourne le rÃ©pertoire oÃ¹ se trouve composer.json et qui n'appartient pas Ã  un rÃ©pertoire s'appelant vendor 
-     * en remontant dans l'arborescence Ã  partir du rÃ©pertoire passÃ© en paramÃ¨tre
-     * Cette fonction n'est appelÃ©e qu'Ã  partir de getRootDir()
+     * Retourne le répertoire où se trouve composer.json et qui n'appartient pas à un répertoire s'appelant vendor 
+     * en remontant dans l'arborescence à partir du répertoire passé en paramètre
+     * Cette fonction n'est appelée qu'à partir de getRootDir()
      * 
      * @param string $d
      *
@@ -49,11 +49,10 @@ class Tools
             $vToReturn = $this->getRootDir($d);
         }
         return $vToReturn;
-
     }
 
     /**
-     * return true s'il y a une rÃ©pertoire app Ã  la racine du projet
+     * return true s'il y a une répertoire app à la racine du projet
      * 
      * @return boolean
      */
@@ -81,7 +80,7 @@ class Tools
     }
 
     /**
-     * CrÃ©er le chemin de rÃ©pertoire Ã  partir de la racine du projet s'il n'exite pas
+     * Créer le chemin de répertoire à partir de la racine du projet s'il n'exite pas
      * 
      * @param string $d
      * 
@@ -98,7 +97,7 @@ class Tools
 
 
     /**
-     * return le rÃ©pertoire parent du rÃ©pertoire passÃ© en paramÃ¨tre
+     * return le répertoire parent du répertoire passé en paramètre
      * 
      * @param string $d
      * 
@@ -133,11 +132,32 @@ class Tools
                 try {
                     rmDir($f);
                 } catch (Exception $e) {
-                    echo 'Exception reÃ§ue : ', $e->getMessage(), "\n";
+                    echo 'Exception reçue : ', $e->getMessage(), "\n";
                 }
-
             }
         }
     }
 
+    /**
+     * place en variable d'environnement les parametres du fichier .env à la racine
+     * @return void
+     */
+    public function LoadDotEnv()
+    {
+        $rootDotEnvPath = $this->getRootDir() . '/.env';
+        try {
+            if (!file_exists($rootDotEnvPath)) {
+                file_put_contents($rootDotEnvPath, "");
+            }    
+            $lines = file($rootDotEnvPath);
+            /*On parcourt le tableau $lines et on affiche le contenu de chaque ligne précédée de son numéro*/
+            foreach ($lines as $lineNumber => $lineContent) {
+                if (substr($lineContent, 0, 1) != "#" && strpos($lineContent, "=") > 0) {
+                    putenv($lineContent);
+                }
+            }
+        } catch (Exception $e) {
+            echo 'Exception reçue : ',  $e->getMessage(), "\n";
+        }
+    }
 }
